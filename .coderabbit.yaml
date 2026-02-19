@@ -1,0 +1,47 @@
+# CodeRabbit configuration
+# CodeRabbit is a GitHub App — install it at https://github.com/apps/coderabbitai
+# This file configures review behaviour. No GitHub Action needed.
+# Docs: https://docs.coderabbit.ai/guides/configure-coderabbit
+
+language: "en-US"
+
+tone_instructions: >
+  Be concise, constructive and pragmatic. Focus on bugs, security issues,
+  and significant design problems. Avoid nitpicking minor style issues
+  that are already handled by the linter.
+
+reviews:
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/dist/**"
+    - "!**/target/**"
+    - "!**/.mvn/**"
+    - "!**/package-lock.json"
+
+  path_instructions:
+    - path: "frontend/src/**"
+      instructions: >
+        Review React components for: hooks rules, accessibility (a11y),
+        missing key props, and Tailwind class correctness.
+    - path: "backend/src/**"
+      instructions: >
+        Review Spring Boot code for: proper use of @Transactional,
+        input validation, security vulnerabilities (OWASP Top 10),
+        and Flyway migration compatibility.
+    - path: "database/**"
+      instructions: >
+        Review SQL for: missing indexes on FK columns, correct use of
+        ON DELETE constraints, and data type appropriateness.
+    - path: ".github/workflows/**"
+      instructions: >
+        Review GitHub Actions for: pinned action versions, secret leakage,
+        and unnecessary permissions.
+
+chat:
+  auto_reply: true
