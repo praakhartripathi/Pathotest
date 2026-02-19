@@ -1,6 +1,6 @@
 import { Phone, Mail } from 'lucide-react';
 
-export default function TopBar() {
+export default function TopBar({ onInvestorClick, onContactClick }) {
     return (
         <div className="w-full bg-yellow-400 flex items-center justify-between px-6 py-2 shadow-md">
             {/* Left – App Name */}
@@ -12,18 +12,18 @@ export default function TopBar() {
 
             {/* Right – Links + Contact */}
             <div className="flex items-center gap-6 text-blue-800 font-medium text-sm">
-                <a
-                    href="#investor"
-                    className="hover:text-blue-600 transition-colors duration-200 font-semibold uppercase tracking-wide"
+                <button
+                    onClick={onInvestorClick}
+                    className="hover:text-blue-600 transition-colors duration-200 font-semibold uppercase tracking-wide bg-transparent border-none p-0 cursor-pointer"
                 >
                     Investor
-                </a>
-                <a
-                    href="#contact"
-                    className="hover:text-blue-600 transition-colors duration-200 font-semibold uppercase tracking-wide"
+                </button>
+                <button
+                    onClick={onContactClick}
+                    className="hover:text-blue-600 transition-colors duration-200 font-semibold uppercase tracking-wide bg-transparent border-none p-0 cursor-pointer"
                 >
                     Contact Us
-                </a>
+                </button>
 
                 <div className="h-5 w-px bg-blue-700 opacity-40" />
 
