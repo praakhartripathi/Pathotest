@@ -1,0 +1,7 @@
+# Docker ignore for frontend — exclude files not needed in build context
+node_modules
+dist
+.env*
+*.log
+.DS_Store
+coverage
