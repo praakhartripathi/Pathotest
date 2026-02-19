@@ -1,0 +1,4 @@
+# Docker ignore for backend — exclude files not needed in build context
+target/
+*.log
+.DS_Store
