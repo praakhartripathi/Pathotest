@@ -6,6 +6,7 @@ import InvestorPage from './pages/InvestorPage'
 import ContactPage from './pages/ContactPage'
 import HomeHero from './components/HomeHero'
 import OfferPopup from './components/OfferPopup'
+import Footer from './components/Footer'
 
 const OFFER_POPUP_INTERVAL_MS = 120000
 
@@ -47,6 +48,7 @@ function App() {
       )}
 
       <OfferPopup open={showOfferPopup} onClose={() => setShowOfferPopup(false)} />
+      <Footer />
     </div>
   )
 }
