@@ -61,6 +61,8 @@ export default function SignInModal({ open, onClose }) {
             if (!res.ok || !data.success) {
                 throw new Error(data.message || 'Failed to send OTP. Please try again.')
             }
+            // DEV: OTP is returned by backend for testing — remove when SMS is live
+            console.log('%c🔐 Pathotest OTP: ' + data.data, 'color:#194b76;font-size:18px;font-weight:bold;')
             setStep('otp')
         } catch (err) {
             setError(err.message)

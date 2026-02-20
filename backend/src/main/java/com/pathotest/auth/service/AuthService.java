@@ -41,7 +41,7 @@ public class AuthService {
     // ─────────────────────────────────────────────────────────────────
 
     @Transactional
-    public void generateOtp(String mobile) {
+    public String generateOtp(String mobile) {
         // Invalidate any previous live OTPs for this number
         otpRepo.invalidatePreviousOtps(mobile);
 
@@ -58,6 +58,8 @@ public class AuthService {
         // Replace this log statement with your SMS provider call, e.g.:
         //   smsService.send(mobile, "Your Pathotest OTP is " + otp);
         log.info("OTP for +91{} : {}", mobile, otp);
+
+        return otp; // returned to controller so it can be logged in frontend console (dev only)
     }
 
     // ─────────────────────────────────────────────────────────────────

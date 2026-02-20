@@ -28,12 +28,14 @@ public class AuthController {
      */
     @Operation(summary = "Generate OTP", description = "Send a 6-digit OTP to the provided mobile number")
     @PostMapping("/generate-otp")
-    public ResponseEntity<ApiResponse<Void>> generateOtp(
+    public ResponseEntity<ApiResponse<String>> generateOtp(
             @Valid @RequestBody GenerateOtpRequest request) {
 
-        authService.generateOtp(request.mobile());
+        String otp = authService.generateOtp(request.mobile());
+        // DEV: otp is returned in response so frontend can console.log it.
+        // Remove data field (pass null) when real SMS is integrated.
         return ResponseEntity.ok(
-                ApiResponse.success(null, "OTP sent successfully to +91" + request.mobile()));
+                ApiResponse.success(otp, "OTP sent successfully to +91" + request.mobile()));
     }
 
     /**
