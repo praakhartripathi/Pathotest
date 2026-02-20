@@ -89,8 +89,8 @@ export default function HomeHero() {
   }
 
   return (
-    <section className="max-w-[1260px] mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-8">
-      <div className="grid gap-5 lg:gap-6 lg:grid-cols-[1fr_390px]">
+    <section className="w-full px-4 sm:px-6 lg:px-10 pt-5 sm:pt-8">
+      <div className="grid gap-5 lg:gap-6 lg:grid-cols-[1fr_420px]">
         <div className="relative overflow-hidden rounded-[22px] sm:rounded-[30px] bg-gradient-to-br from-[#0664ad] via-[#0b5793] to-[#0a365f] min-h-[260px] sm:min-h-[320px] lg:min-h-[360px] p-5 sm:p-8 lg:p-10">
           <div className="relative z-10 max-w-[520px]">
             <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.02em]">

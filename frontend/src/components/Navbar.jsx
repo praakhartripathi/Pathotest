@@ -17,7 +17,7 @@ const RIGHT_LINKS = [
 export default function Navbar() {
   return (
     <nav className="w-full bg-white border-b border-gray-200">
-      <div className="max-w-[1260px] mx-auto px-4 sm:px-6 lg:px-8 h-12 md:h-14 flex items-center justify-between gap-4">
+      <div className="w-full px-4 sm:px-6 lg:px-10 h-12 md:h-14 flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 md:gap-6 overflow-x-auto scrollbar-thin">
           <button className="border-0 bg-transparent p-0 text-gray-700 hover:text-[#1b4e7b]">
             <Menu size={20} />

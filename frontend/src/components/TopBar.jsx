@@ -22,17 +22,17 @@ export default function TopBar({ onHomeClick }) {
 
   return (
     <header className="w-full bg-[#efefef] border-b border-gray-200">
-      <div className="max-w-[1260px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center gap-3 md:gap-4">
+      <div className="w-full px-4 sm:px-6 lg:px-10 py-3 flex flex-wrap items-center gap-3 md:gap-4">
         <button
           type="button"
           onClick={onHomeClick}
           className="flex items-center gap-2 shrink-0 border-0 bg-transparent p-0 cursor-pointer"
           aria-label="Go to home page"
         >
-          <span className="text-3xl sm:text-4xl font-extrabold text-[#1b4e7b] tracking-tight">PathTest</span>
+          <span className="text-3xl sm:text-4xl font-extrabold text-[#1b4e7b] tracking-tight">Patho Test</span>
         </button>
 
-        <div className="order-3 md:order-none flex items-stretch w-full md:flex-1 md:max-w-[860px] md:ml-2 lg:ml-5">
+        <div className="order-3 md:order-none flex items-stretch w-full md:flex-1 md:ml-2 lg:ml-5">
           <div className="relative">
             <select
               value={selectedCity}
