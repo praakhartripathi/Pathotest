@@ -2,9 +2,19 @@ FROM node:20-alpine
 
 WORKDIR /app
 
+# ── Pre-install dependencies (cached layer) ───────────────────────────
+# Only re-runs when package*.json changes.
+# node_modules is kept in a named volume so it survives re-builds
+# without re-downloading.
 COPY package*.json ./
 RUN npm ci
 
+# Source files are bind-mounted at runtime — no COPY src needed.
+
 EXPOSE 5173
 
+# --host 0.0.0.0   exposes HMR outside the container
+# --port 5173      keeps the same internal port
+# Vite will watch the bind-mounted /app/src and push HMR updates
+# to the browser automatically.
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]

@@ -22,6 +22,7 @@ services:
       retries: 5
       start_period: 30s
 
+  # ── Backend (Spring Boot + DevTools hot restart) ────────────────────
   backend:
     build:
       context: ./backend
@@ -29,15 +30,18 @@ services:
     container_name: pathotest-backend-dev
     restart: unless-stopped
     environment:
-      SPRING_PROFILES_ACTIVE: prod
-      DB_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-pathotest}?useSSL=false&serverTimezone=UTC
+      SPRING_PROFILES_ACTIVE: docker-dev
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+      SPRING_DEVTOOLS_RESTART_POLL_INTERVAL: "1000"
+      SPRING_DEVTOOLS_RESTART_QUIET_PERIOD: "400"
+      SPRING_DEVTOOLS_LIVERELOAD_ENABLED: "true"
+      DB_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-pathotest}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       DB_USERNAME: ${MYSQL_USER:-pathotest_user}
       DB_PASSWORD: ${MYSQL_PASSWORD:-change_me_password}
-      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
-      SPRING_DEVTOOLS_RESTART_POLL_INTERVAL: 2s
-      SPRING_DEVTOOLS_RESTART_QUIET_PERIOD: 1s
     volumes:
+      # Bind-mount the entire backend source so Maven sees live changes
       - ./backend:/app
+      # Keep the local Maven repo in a named volume — avoid re-downloading
       - maven_cache:/root/.m2
     ports:
       - "25999:8080"
@@ -51,8 +55,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 90s
 
+  # ── Frontend (Vite HMR) ─────────────────────────────────────────────
   frontend:
     build:
       context: ./frontend
@@ -60,10 +65,16 @@ services:
     container_name: pathotest-frontend-dev
     restart: unless-stopped
     environment:
-      CHOKIDAR_USEPOLLING: "true"
-      WATCHPACK_POLLING: "true"
+      # Polling ensures file changes are detected inside Docker on macOS
+      VITE_POLLING: "true"
+      # HMR websocket must connect back to your Mac's localhost
+      VITE_HMR_HOST: "localhost"
+      # Proxy /api/* to the backend service inside Docker
+      VITE_API_TARGET: "http://backend:8080"
     volumes:
+      # Bind-mount source so Vite watches your live files
       - ./frontend:/app
+      # Keep node_modules in a named volume so they survive rebuilds
       - frontend_node_modules:/app/node_modules
     ports:
       - "25001:5173"
