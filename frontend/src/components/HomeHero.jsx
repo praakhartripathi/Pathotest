@@ -8,6 +8,7 @@ import {
   UserRoundCheck,
 } from 'lucide-react'
 import WellnessPackagesSection from './WellnessPackagesSection'
+import TestByHealthRisks from './TestByHealthRisks'
 
 const FEATURES = [
   { icon: BadgeCheck, label: 'Most Trusted by Doctors' },
@@ -200,6 +201,7 @@ export default function HomeHero() {
       </div>
 
       <WellnessPackagesSection />
+      <TestByHealthRisks />
     </section>
   )
 }
