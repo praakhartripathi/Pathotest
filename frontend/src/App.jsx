@@ -4,6 +4,7 @@ import TopBar from './components/TopBar'
 import Navbar from './components/Navbar'
 import InvestorPage from './pages/InvestorPage'
 import ContactPage from './pages/ContactPage'
+import HomeHero from './components/HomeHero'
 
 function App() {
   const [page, setPage] = useState('home')
@@ -20,10 +21,8 @@ function App() {
       {page === 'contact' && <ContactPage />}
 
       {page === 'home' && (
-        <main className="max-w-6xl mx-auto px-6 py-12">
-          <p className="text-gray-400 text-center mt-20 text-lg">
-            Patho Test — Home page coming soon.
-          </p>
+        <main className="pb-10">
+          <HomeHero />
         </main>
       )}
     </div>
