@@ -14,7 +14,7 @@ const RIGHT_LINKS = [
   { label: 'Upload Prescription', icon: UploadCloud, prefix: 'Rx' },
 ]
 
-export default function Navbar({ onSignInClick }) {
+export default function Navbar() {
   return (
     <nav className="w-full bg-white border-b border-gray-200">
       <div className="w-full px-4 sm:px-6 lg:px-10 h-12 md:h-14 flex items-center justify-between gap-4">
@@ -46,16 +46,6 @@ export default function Navbar({ onSignInClick }) {
             </button>
           ))}
         </div>
-
-        {/* Sign In button */}
-        <button
-          type="button"
-          id="navbar-sign-in"
-          onClick={onSignInClick}
-          className="ml-2 flex-shrink-0 h-9 px-5 rounded-full bg-[#194b76] text-white font-semibold text-sm border-0 hover:bg-[#0e3a5e] transition-colors"
-        >
-          Sign In
-        </button>
       </div>
     </nav>
   )
