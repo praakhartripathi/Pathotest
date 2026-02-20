@@ -13,6 +13,7 @@ import MostPrescribedTests from './MostPrescribedTests'
 import TestByHealthConditions from './TestByHealthConditions'
 import PromoBanners from './PromoBanners'
 import WhyPathotestLabs from './WhyPathotestLabs'
+import CustomerReviews from './CustomerReviews'
 
 const FEATURES = [
   { icon: BadgeCheck, label: 'Most Trusted by Doctors' },
@@ -210,6 +211,7 @@ export default function HomeHero() {
       <TestByHealthConditions />
       <PromoBanners />
       <WhyPathotestLabs />
+      <CustomerReviews />
     </section>
   )
 }
