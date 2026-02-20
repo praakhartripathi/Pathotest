@@ -89,27 +89,27 @@ export default function HomeHero() {
   }
 
   return (
-    <section className="max-w-[1260px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10">
+    <section className="max-w-[1260px] mx-auto px-4 sm:px-6 lg:px-8 pt-5 sm:pt-8">
       <div className="grid gap-5 lg:gap-6 lg:grid-cols-[1fr_390px]">
-        <div className="relative overflow-hidden rounded-[30px] bg-gradient-to-br from-[#0664ad] via-[#0b5793] to-[#0a365f] min-h-[330px] sm:min-h-[360px] p-8 sm:p-10">
+        <div className="relative overflow-hidden rounded-[22px] sm:rounded-[30px] bg-gradient-to-br from-[#0664ad] via-[#0b5793] to-[#0a365f] min-h-[260px] sm:min-h-[320px] lg:min-h-[360px] p-5 sm:p-8 lg:p-10">
           <div className="relative z-10 max-w-[520px]">
-            <h1 className="text-white text-4xl sm:text-5xl font-extrabold leading-tight tracking-[-0.02em]">
+            <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-[-0.02em]">
               Accurate Diagnosis
               <br />
               Smart Report
             </h1>
 
-            <div className="mt-5 inline-flex rounded-xl bg-[#ffd027] px-5 py-2 text-[#1f2c3a] font-semibold text-2xl sm:text-[33px]">
+            <div className="mt-4 inline-flex rounded-xl bg-[#ffd027] px-4 py-2 text-[#1f2c3a] font-semibold text-base sm:text-xl lg:text-2xl">
               FREE with all Healthkind Packages.
             </div>
 
-            <p className="mt-5 text-[27px] leading-snug text-blue-50 max-w-[420px]">
+            <p className="mt-4 text-xl sm:text-2xl lg:text-[27px] leading-snug text-blue-50 max-w-[420px]">
               Because your health deserves better understanding.
             </p>
           </div>
 
-          <div className="absolute right-[12%] bottom-0 h-[78%] w-[210px] rounded-t-[120px] bg-gradient-to-b from-gray-100 to-gray-300 opacity-95" />
-          <div className="absolute right-6 top-7 w-[150px] h-[286px] rounded-[28px] border-4 border-black bg-white shadow-2xl overflow-hidden">
+          <div className="hidden sm:block absolute right-[12%] bottom-0 h-[78%] w-[170px] lg:w-[210px] rounded-t-[120px] bg-gradient-to-b from-gray-100 to-gray-300 opacity-95" />
+          <div className="hidden sm:block absolute right-5 lg:right-6 top-6 lg:top-7 w-[120px] lg:w-[150px] h-[230px] lg:h-[286px] rounded-[24px] lg:rounded-[28px] border-4 border-black bg-white shadow-2xl overflow-hidden">
             <div className="h-7 bg-[#0a5da1]" />
             <div className="p-3 space-y-2">
               <div className="h-2.5 w-16 bg-[#0a5da1]/20 rounded" />
@@ -121,8 +121,8 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <aside className="rounded-[26px] bg-[#e9e9ea] shadow-[0_10px_30px_rgba(0,0,0,0.15)] p-6 sm:p-7">
-          <h2 className="text-[35px] font-extrabold text-[#292a31] mb-4">
+        <aside className="rounded-[22px] sm:rounded-[26px] bg-[#e9e9ea] shadow-[0_10px_30px_rgba(0,0,0,0.15)] p-5 sm:p-6">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#292a31] mb-4">
             Schedule a Home Collection
           </h2>
           <form className="space-y-3" onSubmit={handleSubmit}>
@@ -131,7 +131,7 @@ export default function HomeHero() {
               placeholder="What's your name? *"
               value={form.name}
               onChange={handleChange('name')}
-              className="w-full h-14 px-4 rounded-lg border border-gray-300 bg-white text-[24px] text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-11 sm:h-12 px-4 rounded-lg border border-gray-300 bg-white text-base sm:text-lg text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="tel"
@@ -141,10 +141,10 @@ export default function HomeHero() {
               inputMode="numeric"
               maxLength={10}
               pattern="[0-9]{10}"
-              className="w-full h-14 px-4 rounded-lg border border-gray-300 bg-white text-[24px] text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-11 sm:h-12 px-4 rounded-lg border border-gray-300 bg-white text-base sm:text-lg text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
             />
             <select
-              className="w-full h-14 px-4 rounded-lg border border-gray-300 bg-white text-[24px] text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-11 sm:h-12 px-4 rounded-lg border border-gray-300 bg-white text-base sm:text-lg text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
               value={form.city}
               onChange={handleChange('city')}
             >
@@ -157,7 +157,7 @@ export default function HomeHero() {
             </select>
 
             <div className="pt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <label className="flex items-start gap-2 text-[14px] leading-[1.4] text-gray-600 max-w-[360px]">
+              <label className="flex items-start gap-2 text-xs sm:text-sm leading-[1.4] text-gray-600 max-w-[360px]">
                 <input
                   type="checkbox"
                   className="mt-0.5 h-4 w-4 accent-blue-600"
@@ -172,7 +172,7 @@ export default function HomeHero() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="self-end sm:self-auto h-14 min-w-[130px] px-8 rounded-full border-0 text-[26px] font-semibold text-white bg-[#0e4a78] hover:bg-[#0b3f67] transition-colors"
+                className="self-end sm:self-auto h-11 sm:h-12 min-w-[120px] px-6 rounded-full border-0 text-xl sm:text-2xl font-semibold text-white bg-[#0e4a78] hover:bg-[#0b3f67] transition-colors"
               >
                 {submitting ? 'Submitting...' : 'Submit'}
               </button>
@@ -183,15 +183,16 @@ export default function HomeHero() {
         </aside>
       </div>
 
-      <div className="flex justify-center py-6">
+      <div className="flex justify-center py-4 sm:py-6">
         <span className="h-4 w-4 rounded-full bg-[#f4bf16]" />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-5 pb-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-4 sm:gap-y-5 pb-4">
         {FEATURES.map(({ icon: Icon, label }) => (
           <div key={label} className="flex items-start gap-2.5 text-[#17171a]">
-            <Icon size={28} className="mt-0.5 text-gray-700 shrink-0" strokeWidth={1.9} />
-            <p className="text-[18px] leading-snug font-medium">{label}</p>
+            <Icon size={22} className="mt-0.5 text-gray-700 shrink-0 sm:hidden" strokeWidth={1.9} />
+            <Icon size={28} className="mt-0.5 text-gray-700 shrink-0 hidden sm:block" strokeWidth={1.9} />
+            <p className="text-sm sm:text-base lg:text-lg leading-snug font-medium">{label}</p>
           </div>
         ))}
       </div>
