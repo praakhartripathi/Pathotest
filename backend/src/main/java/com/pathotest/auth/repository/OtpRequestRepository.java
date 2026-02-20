@@ -13,14 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 public interface OtpRequestRepository extends JpaRepository<OtpRequest, Long> {
 
     /** Latest unverified, non-expired OTP for a mobile number. */
-    @Query("""
-            SELECT o FROM OtpRequest o
-            WHERE o.mobile = :mobile
-              AND o.verified = false
-              AND o.expiresAt > CURRENT_TIMESTAMP
-            ORDER BY o.createdAt DESC
+    @Query(value = """
+            SELECT * FROM otp_requests
+            WHERE mobile = :mobile
+              AND verified = false
+              AND expires_at > CURRENT_TIMESTAMP
+            ORDER BY created_at DESC
             LIMIT 1
-            """)
+            """, nativeQuery = true)
     Optional<OtpRequest> findLatestValidOtp(@Param("mobile") String mobile);
 
     /** Invalidate all previous OTPs for a mobile before sending a new one. */

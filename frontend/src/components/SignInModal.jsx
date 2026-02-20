@@ -8,6 +8,7 @@ export default function SignInModal({ open, onClose }) {
     const [consent, setConsent] = useState(true)
     const [step, setStep] = useState('mobile') // 'mobile' | 'otp'
     const [otp, setOtp] = useState('')
+    const [debugOtp, setDebugOtp] = useState('')
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
@@ -16,6 +17,7 @@ export default function SignInModal({ open, onClose }) {
         if (open) {
             setMobile('')
             setOtp('')
+            setDebugOtp('')
             setStep('mobile')
             setLoading(false)
             setError('')
@@ -62,7 +64,10 @@ export default function SignInModal({ open, onClose }) {
                 throw new Error(data.message || 'Failed to send OTP. Please try again.')
             }
             // DEV: OTP is returned by backend for testing — remove when SMS is live
-            console.log('%c🔐 Pathotest OTP: ' + data.data, 'color:#194b76;font-size:18px;font-weight:bold;')
+            const generatedOtp = String(data.data ?? '')
+            setDebugOtp(generatedOtp)
+            window.__PATHOTEST_OTP = generatedOtp
+            console.log('Pathotest OTP:', generatedOtp)
             setStep('otp')
         } catch (err) {
             setError(err.message)
@@ -183,6 +188,11 @@ export default function SignInModal({ open, onClose }) {
                         <p className="text-sm text-center text-gray-500">
                             OTP sent to <span className="font-semibold text-[#194b76]">+91 {mobile}</span>
                         </p>
+                        {debugOtp && (
+                            <p className="text-sm text-center text-green-700 font-semibold">
+                                Test OTP: {debugOtp}
+                            </p>
+                        )}
                         <input
                             id="sign-in-otp"
                             type="tel"
