@@ -1,24 +1,23 @@
+# syntax=docker/dockerfile:1
 FROM maven:3.9-eclipse-temurin-17
 
 WORKDIR /app
 
-# ── Pre-download dependencies (cached layer) ──────────────────────────
-# Only re-runs when pom.xml changes
+# Pre-download dependencies — cached in BuildKit mount so re-runs
+# only fetch NEW jars when pom.xml changes (not the full repo).
 COPY pom.xml ./
-RUN mvn -q -DskipTests dependency:go-offline
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn dependency:go-offline -q
 
-# Source is bind-mounted at runtime via docker-compose volume.
-# We intentionally do NOT COPY src here so the container always
-# reads your live host files.
+# Source is bind-mounted at runtime via docker-compose.dev.yml volume.
+# We intentionally do NOT COPY src so the container always reads
+# your live host files.
 
 EXPOSE 8080
 
-# spring-boot:run with DevTools enabled.
-# DevTools watches the compiled classes directory; Maven's built-in
-# compiler plugin recompiles when the source changes (via the
-# -Dspring-boot.run.fork=false flag which keeps everything in one JVM
-# so DevTools class-loader tricks work correctly inside Docker).
+# -Dspring-boot.run.fork=false keeps everything in one JVM so
+# Spring DevTools class-loader hot-restart works inside Docker.
 CMD ["mvn", "spring-boot:run", \
-     "-Dspring-boot.run.profiles=dev", \
+     "-Dspring-boot.run.profiles=docker-dev", \
      "-Dspring-boot.run.fork=false", \
      "-Dspring-boot.run.addResources=true"]

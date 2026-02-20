@@ -1,20 +1,18 @@
+# syntax=docker/dockerfile:1
 FROM node:20-alpine
 
 WORKDIR /app
 
-# ── Pre-install dependencies (cached layer) ───────────────────────────
-# Only re-runs when package*.json changes.
-# node_modules is kept in a named volume so it survives re-builds
-# without re-downloading.
+# Pre-install dependencies — cached in BuildKit mount.
+# node_modules are also kept in a named volume in docker-compose.dev.yml
+# so they survive container restarts without reinstalling.
 COPY package*.json ./
-RUN npm ci
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci
 
 # Source files are bind-mounted at runtime — no COPY src needed.
 
 EXPOSE 5173
 
-# --host 0.0.0.0   exposes HMR outside the container
-# --port 5173      keeps the same internal port
-# Vite will watch the bind-mounted /app/src and push HMR updates
-# to the browser automatically.
+# --host 0.0.0.0  exposes Vite HMR websocket outside the container
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
