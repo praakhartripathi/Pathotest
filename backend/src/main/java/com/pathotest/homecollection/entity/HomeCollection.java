@@ -1,7 +1,10 @@
 package com.pathotest.homecollection.entity;
 
+import com.pathotest.homecollection.model.HomeCollectionStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +32,10 @@ public class HomeCollection {
     @Column(nullable = false)
     private Boolean consent;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private HomeCollectionStatus status = HomeCollectionStatus.NEW;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -53,6 +60,10 @@ public class HomeCollection {
         return consent;
     }
 
+    public HomeCollectionStatus getStatus() {
+        return status;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -71,5 +82,9 @@ public class HomeCollection {
 
     public void setConsent(Boolean consent) {
         this.consent = consent;
+    }
+
+    public void setStatus(HomeCollectionStatus status) {
+        this.status = status;
     }
 }

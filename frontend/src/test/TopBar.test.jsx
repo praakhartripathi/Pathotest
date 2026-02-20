@@ -1,30 +1,21 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import TopBar from '../components/TopBar'
 
 describe('TopBar', () => {
-    it('renders the app name', () => {
-        render(<TopBar />)
-        expect(screen.getByText('Path')).toBeInTheDocument()
-    })
+  it('renders Patho Test brand', () => {
+    render(<TopBar onHomeClick={() => {}} />)
+    expect(screen.getByRole('button', { name: /go to home page/i })).toHaveTextContent('Patho Test')
+  })
 
-    it('renders Investor link', () => {
-        render(<TopBar />)
-        expect(screen.getByRole('link', { name: /investor/i })).toBeInTheDocument()
-    })
+  it('renders UP city dropdown defaults to Lucknow', () => {
+    render(<TopBar onHomeClick={() => {}} />)
+    expect(screen.getByDisplayValue('Lucknow')).toBeInTheDocument()
+  })
 
-    it('renders Contact Us link', () => {
-        render(<TopBar />)
-        expect(screen.getByRole('link', { name: /contact us/i })).toBeInTheDocument()
-    })
-
-    it('renders phone number', () => {
-        render(<TopBar />)
-        expect(screen.getByText(/12345 67890/i)).toBeInTheDocument()
-    })
-
-    it('renders email address', () => {
-        render(<TopBar />)
-        expect(screen.getByText(/info@pathotest\.com/i)).toBeInTheDocument()
-    })
+  it('renders call link and sign in controls', () => {
+    render(<TopBar onHomeClick={() => {}} />)
+    expect(screen.getByRole('link', { name: /call us now/i })).toHaveAttribute('href', 'tel:+917500075111')
+    expect(screen.getByText(/sign in/i)).toBeInTheDocument()
+  })
 })

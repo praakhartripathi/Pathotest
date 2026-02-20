@@ -24,6 +24,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/home-collection", "/api/home-collection/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/packages", "/api/tests").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/blogs", "/api/blogs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/locations").permitAll()
                         .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
                         .anyRequest().authenticated()

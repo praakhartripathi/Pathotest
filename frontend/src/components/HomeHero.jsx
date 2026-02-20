@@ -7,6 +7,7 @@ import {
   MapPinned,
   UserRoundCheck,
 } from 'lucide-react'
+import WellnessPackagesSection from './WellnessPackagesSection'
 
 const FEATURES = [
   { icon: BadgeCheck, label: 'Most Trusted by Doctors' },
@@ -74,7 +75,8 @@ export default function HomeHero() {
         throw new Error(data?.message || 'Unable to schedule home collection')
       }
 
-      setMessage(`Booking confirmed. ID: ${data.bookingId}`)
+      const bookingId = data?.data?.bookingId ?? data?.bookingId
+      setMessage(`Booking confirmed. ID: ${bookingId}`)
       setForm({
         name: '',
         mobile: '',
@@ -196,6 +198,8 @@ export default function HomeHero() {
           </div>
         ))}
       </div>
+
+      <WellnessPackagesSection />
     </section>
   )
 }

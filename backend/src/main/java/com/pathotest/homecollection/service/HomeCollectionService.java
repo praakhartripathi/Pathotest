@@ -2,6 +2,7 @@ package com.pathotest.homecollection.service;
 
 import com.pathotest.homecollection.dto.HomeCollectionRequest;
 import com.pathotest.homecollection.entity.HomeCollection;
+import com.pathotest.homecollection.model.HomeCollectionStatus;
 import com.pathotest.homecollection.repository.HomeCollectionRepository;
 import java.util.Locale;
 import java.util.Set;
@@ -34,6 +35,7 @@ public class HomeCollectionService {
         entity.setMobile(request.getMobile().trim());
         entity.setCity(toTitleCase(request.getCity().trim()));
         entity.setConsent(Boolean.TRUE.equals(request.getConsent()));
+        entity.setStatus(HomeCollectionStatus.NEW);
 
         return repository.save(entity);
     }
