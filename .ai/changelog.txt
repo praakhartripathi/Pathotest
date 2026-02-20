@@ -1,0 +1,127 @@
+# Pathotest — AI Assistant Change Log
+
+This file is maintained by the Antigravity AI assistant.
+It documents every change made to the Pathotest codebase session by session.
+
+---
+
+## Session: 2026-02-20
+
+### [Issue #20] feat: Add Test by Health Risks section on Home page
+- Created `frontend/src/components/TestByHealthRisks.jsx`
+  - 8 health risk categories: Heart, Liver, Kidney, Bone, Thyroid, Lungs, Brain, Diabetes
+  - Circular icon buttons with emoji, bold label, "Know More" navy button
+  - Responsive grid: 2 cols mobile / 4 cols tablet / 8 cols desktop
+  - Hover scale + shadow on icon circles
+- Modified `frontend/src/components/HomeHero.jsx` to include <TestByHealthRisks />
+- Branch: feat/test-by-health-risks
+
+---
+
+### [Issue #22] feat: Add Most Prescribed Tests carousel section on Home page
+- Created `frontend/src/components/MostPrescribedTests.jsx`
+  - 10 diagnostic test cards in a horizontal scroll carousel
+  - Each card: test name, parameter count, dashed-border price box, Add to Cart + Book Now buttons
+  - Left/Right ChevronLeft/Right nav arrows, auto-disable at scroll edges
+  - Responsive: full-width scroll mobile, arrow nav xl+
+- Modified `HomeHero.jsx` to include <MostPrescribedTests />
+- Branch: feat/most-prescribed-tests
+
+---
+
+### [Issue #24] feat: Add Test by Health Conditions and Promo Banners sections
+- Created `frontend/src/components/TestByHealthConditions.jsx`
+  - 9 health condition icon tiles with inline SVG icons
+    (Alcohol, Allergy, Anemia, Arthritis, Cancer, Diabetes, Fever, Pregnancy, Hepatitis)
+  - Horizontal scroll mobile / 9-col grid desktop
+  - Hover: border + icon colour shifts to navy
+- Created `frontend/src/components/PromoBanners.jsx`
+  - Two side-by-side promo cards:
+    Left — dark maroon "Unveiling the Hidden Causes of Acne with Pathotest"
+    Right — light grey "60% Suffer Hairfall – Are You at Risk?" / Pathotest HairfallCheck
+  - Responsive: stacked mobile / side-by-side md+
+- Modified `HomeHero.jsx` to include both sections
+- Branch: feat/health-conditions-promo-banners
+
+---
+
+### [Issue #26] feat: Add Why Pathotest trust section on Home page
+- Created `frontend/src/components/WhyPathotestLabs.jsx`
+  - 8 trust-building feature cards with inline SVG icons (navy #194b76)
+  - NABL Accredited Labs, Trusted by Leading Doctors, Shortest Reporting Time,
+    Accurate Test Reports, 1 Crore+ Satisfied Customers, 100+ Labs,
+    3000+ Collection Centres, Scientific Orientation
+  - Responsive grid: 1 col mobile / 2 col tablet / 4 col desktop
+  - Hover: shadow-md lift
+- Modified `HomeHero.jsx` to include <WhyPathotestLabs />
+- Branch: feat/why-pathkind-labs
+
+---
+
+### [Issue #28] fix: Replace all Pathkind/Healthkind brand references with Pathotest
+- HomeHero.jsx: consent text, hero banner text, import rename
+- WhyPathkindLabs.jsx → renamed to WhyPathotestLabs.jsx
+- WellnessPackagesSection.jsx: PATHOTEST TOTAL PLUS / ADVANCE / PLATINUM / COMPLETE
+- OfferPopup.jsx: aria-label, image src (/offers/pathotest-offer.png), alt text
+- PromoBanners.jsx: acne banner copy + HairfallCheck branding
+- AppOfferPopup.test.jsx + OfferPopup.test.jsx: aria queries updated
+- Branch: fix/replace-brand-name-pathotest
+
+---
+
+### [Issue #30] feat: Add What Our Customers Say testimonials section
+- Created `frontend/src/components/CustomerReviews.jsx`
+  - 6 customer review cards: Simran Kaur, Aman Kumar, Mayur Gupta,
+    Parveen Satija, Rekha Sharma, Deepak Verma
+  - Each card: coloured avatar circle with initial, name, time ago,
+    5-star SVG rating, review text (line-clamp-5)
+  - Horizontal scroll carousel, hidden scrollbar, touch-friendly
+  - Hover: shadow-md lift
+- Modified `HomeHero.jsx` to include <CustomerReviews />
+- Branch: feat/customer-reviews
+
+---
+
+### [Issue #32] feat: Add Our Blogs section on Home page
+- Created `frontend/src/components/OurBlogs.jsx`
+  - 4 blog cards in responsive 1→2→4 column grid
+  - Each card: thumbnail (img with CSS gradient+emoji fallback),
+    bold title (line-clamp-3), navy "Know More" button, author + date footer
+  - Real images load from /blogs/*.jpg; gradient fallback when missing
+  - Blog entries:
+    - Skin Infections: Types, Causes & Treatments (Dr. Pankaj Mandale, 06 Feb 2026)
+    - Typhoid Fever: Causes, Symptoms & Treatment Options (Dr. Rahul Verma, 06 Feb 2026)
+    - Sciatica: Causes, Symptoms, Treatment & Pain Relief Tips (Dr. Pankaj Mandale, 30 Jan 2026)
+    - Pineapple During Pregnancy: Benefits, Risks (Dr. Rahul Verma, 18 Feb 2026)
+- Modified `HomeHero.jsx` to include <OurBlogs />
+- Branch: feat/our-blogs
+
+---
+
+### [Issue #34] feat: Add Blood Tests Near You UP locations section
+- Created `frontend/src/components/BloodTestsNearYou.jsx`
+  - 70+ UP location links in a 4-column grid
+  - Covers 13 cities: Lucknow, Kanpur, Agra, Varanasi, Noida, Ghaziabad,
+    Prayagraj, Meerut, Bareilly, Gorakhpur, Mathura, Jhansi, Ayodhya
+  - Each entry has specific locality (e.g., "Blood Test in Gomti Nagar, Lucknow")
+  - Navy › chevron prefix, hover underline + colour
+  - Grey background section
+- Modified `HomeHero.jsx` to include <BloodTestsNearYou />
+- Branch: feat/blood-tests-near-you
+
+---
+
+### [Issue #36] feat: Add About Pathotest and Popular Health Tests sections + AI changelog
+- Created `frontend/src/components/AboutPathotest.jsx`
+  - 2-paragraph brand description for Pathotest, UP-specific copy
+- Created `frontend/src/components/PopularHealthTests.jsx`
+  - 130+ health tests in a pipe-separated clickable list for SEO
+  - All Pathotest-branded (no Healthkind/Pathkind references)
+- Modified `HomeHero.jsx` — renders both sections after BloodTestsNearYou
+- Updated `README.md`:
+  - Full frontend section table for all 12 home page components
+  - Corrected project structure tree
+  - Pathotest branding throughout (removed all Pathkind refs)
+  - Fixed example API city Gurgaon → Lucknow
+- Created `.ai/changelog.txt` (this file) — running AI change log
+- Branch: feat/about-popular-tests-sections

@@ -1,14 +1,38 @@
-# PathoTest
+# Pathotest
 
-Full-stack pathology lab platform built with React + Vite (frontend) and Spring Boot (backend).
+Full-stack pathology lab platform built with React + Vite (frontend) and Spring Boot (backend), serving Uttar Pradesh.
 
 ## Project Structure
 
 ```text
 pathotest/
-├── frontend/                      # React app (Vite + Tailwind)
-│   ├── public/offers/             # Offer popup artwork
-│   └── src/components/            # TopBar, Navbar, Hero, Popup, Wellness section
+├── .ai/                           # AI assistant change log
+│   └── changelog.txt
+├── frontend/                      # React app (Vite + Tailwind CSS)
+│   ├── public/
+│   │   ├── offers/                # Offer popup artwork
+│   │   └── blogs/                 # Blog thumbnail images
+│   └── src/
+│       ├── components/
+│       │   ├── TopBar.jsx
+│       │   ├── Navbar.jsx
+│       │   ├── HomeHero.jsx
+│       │   ├── OfferPopup.jsx
+│       │   ├── WellnessPackagesSection.jsx
+│       │   ├── TestByHealthRisks.jsx
+│       │   ├── MostPrescribedTests.jsx
+│       │   ├── TestByHealthConditions.jsx
+│       │   ├── PromoBanners.jsx
+│       │   ├── WhyPathotestLabs.jsx
+│       │   ├── CustomerReviews.jsx
+│       │   ├── OurBlogs.jsx
+│       │   ├── BloodTestsNearYou.jsx
+│       │   ├── AboutPathotest.jsx
+│       │   └── PopularHealthTests.jsx
+│       ├── pages/
+│       │   ├── InvestorPage.jsx
+│       │   └── ContactPage.jsx
+│       └── test/
 ├── backend/                       # Spring Boot REST API
 │   └── src/main/java/com/pathotest/
 │       ├── homecollection/        # Lead capture (Schedule Home Collection)
@@ -68,14 +92,39 @@ cd backend
 mvn spring-boot:run
 ```
 
-## Frontend Features
+## Frontend — Home Page Sections
 
-- Pathkind-style landing page layout (TopBar + Navbar + Hero + Wellness cards)
+The home page is composed of the following sections (in order):
+
+| # | Component | Description |
+|---|---|---|
+| 1 | `HomeHero` | Hero banner, Schedule Home Collection form, feature badges |
+| 2 | `WellnessPackagesSection` | Top Wellness Packages carousel (Pathotest Total Plus, Advance, Platinum, Complete) |
+| 3 | `TestByHealthRisks` | Health risk category icon grid (Heart, Liver, Kidney, Bone, Thyroid…) |
+| 4 | `MostPrescribedTests` | Most Prescribed Tests horizontal carousel with pricing |
+| 5 | `TestByHealthConditions` | Health condition icon grid (Alcohol, Allergy, Anemia, Arthritis, Cancer…) |
+| 6 | `PromoBanners` | Two promo cards — Acne awareness + Pathotest HairfallCheck |
+| 7 | `WhyPathotestLabs` | 8-card trust grid (NABL, Doctors, Reporting Time, Accuracy…) |
+| 8 | `CustomerReviews` | Customer testimonials horizontal scroll carousel |
+| 9 | `OurBlogs` | 4-card blog grid with thumbnail, title, Know More CTA |
+| 10 | `BloodTestsNearYou` | Dense 4-col grid of UP city/area blood test location links |
+| 11 | `AboutPathotest` | Brand description paragraph for SEO |
+| 12 | `PopularHealthTests` | 130+ pipe-separated health test names for SEO |
+
+### Other Pages
+
+- **InvestorPage** — Investor Relations with financials, annual reports, governance
+- **ContactPage** — Tabbed contact page (Corporate Office, Company Info, Enquiry)
+
+### Frontend Features
+
+- Pathotest-branded landing page
 - Floating WhatsApp CTA button
 - Timed offer popup:
-  - appears globally after 120 seconds
+  - appears after 120 seconds
   - reappears every 120 seconds even if closed
   - call CTA: `tel:+917500075111`
+- All cities within Uttar Pradesh supported in home collection form
 
 ## Backend Features
 
@@ -173,7 +222,7 @@ curl "http://localhost:8080/api/blogs"
 Fetch location pages by city:
 
 ```bash
-curl "http://localhost:8080/api/locations?city=Gurgaon"
+curl "http://localhost:8080/api/locations?city=Lucknow"
 ```
 
 ## Testing
@@ -197,3 +246,5 @@ mvn -DskipTests package
 
 - The frontend proxies `/api/*` requests in both Vite dev mode and nginx Docker runtime.
 - `.env` is gitignored; use `.env.example` as reference.
+- Blog thumbnail images go in `frontend/public/blogs/` (filenames: `skin-infection.jpg`, `typhoid-fever.jpg`, `sciatica.jpg`, `pineapple-pregnancy.jpg`).
+- Offer popup image goes in `frontend/public/offers/pathotest-offer.png`.
