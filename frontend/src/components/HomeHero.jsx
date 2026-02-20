@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   BadgeCheck,
   Building2,
@@ -33,6 +34,55 @@ const UP_CITIES = [
 ]
 
 export default function HomeHero() {
+  const [form, setForm] = useState({
+    name: '',
+    mobile: '',
+    city: '',
+    consent: true,
+  })
+  const [submitting, setSubmitting] = useState(false)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
+
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
+
+  const handleChange = (field) => (event) => {
+    const value = field === 'consent' ? event.target.checked : event.target.value
+    setForm((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setMessage('')
+    setError('')
+
+    setSubmitting(true)
+    try {
+      const response = await fetch(`${apiBaseUrl}/api/home-collection`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+
+      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(data?.message || 'Unable to schedule home collection')
+      }
+
+      setMessage(`Booking confirmed. ID: ${data.bookingId}`)
+      setForm({
+        name: '',
+        mobile: '',
+        city: '',
+        consent: true,
+      })
+    } catch (submitError) {
+      setError(submitError.message || 'Unable to schedule home collection')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   return (
     <section className="max-w-[1260px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10">
       <div className="grid gap-5 lg:gap-6 lg:grid-cols-[1fr_390px]">
@@ -70,20 +120,25 @@ export default function HomeHero() {
           <h2 className="text-[35px] font-extrabold text-[#292a31] mb-4">
             Schedule a Home Collection
           </h2>
-          <form className="space-y-3">
+          <form className="space-y-3" onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="What's your name? *"
+              value={form.name}
+              onChange={handleChange('name')}
               className="w-full h-14 px-4 rounded-lg border border-gray-300 bg-white text-[24px] text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="tel"
               placeholder="Mobile number *"
+              value={form.mobile}
+              onChange={handleChange('mobile')}
               className="w-full h-14 px-4 rounded-lg border border-gray-300 bg-white text-[24px] text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
             />
             <select
               className="w-full h-14 px-4 rounded-lg border border-gray-300 bg-white text-[24px] text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
-              defaultValue=""
+              value={form.city}
+              onChange={handleChange('city')}
             >
               <option value="" disabled>
                 Select Your City
@@ -95,19 +150,27 @@ export default function HomeHero() {
 
             <div className="pt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <label className="flex items-start gap-2 text-[14px] leading-[1.4] text-gray-600 max-w-[360px]">
-                <input type="checkbox" className="mt-0.5 h-4 w-4 accent-blue-600" defaultChecked />
+                <input
+                  type="checkbox"
+                  className="mt-0.5 h-4 w-4 accent-blue-600"
+                  checked={form.consent}
+                  onChange={handleChange('consent')}
+                />
                 <span>
                   I authorize Pathkind Labs and its affiliates/representatives to contact me via phone calls, email, RCS, SMS or WhatsApp.
                 </span>
               </label>
 
               <button
-                type="button"
+                type="submit"
+                disabled={submitting}
                 className="self-end sm:self-auto h-14 min-w-[130px] px-8 rounded-full border-0 text-[26px] font-semibold text-white bg-[#0e4a78] hover:bg-[#0b3f67] transition-colors"
               >
-                Submit
+                {submitting ? 'Submitting...' : 'Submit'}
               </button>
             </div>
+            {message && <p className="text-sm text-green-700 font-medium">{message}</p>}
+            {error && <p className="text-sm text-red-700 font-medium">{error}</p>}
           </form>
         </aside>
       </div>
