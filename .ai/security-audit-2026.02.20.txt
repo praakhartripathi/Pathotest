@@ -1,0 +1,47 @@
+Security Audit — 2026-02-20
+Repository: praakhartripathi_Pathotest
+
+Scope:
+- Quick security review of backend and frontend source and Compose configs.
+- Files referenced: SecurityConfig.java, application-*.properties, docker-compose.yml(s), HomeCollectionController/Service, OpenApiConfig, frontend/src.
+
+Critical Issues (High)
+- Open CORS: Allowed origins set to "*" and controller-level @CrossOrigin(origins = "*") — allows any site to call APIs.
+- CSRF disabled globally (csrf.disable()) — state-changing endpoints vulnerable when browser credentials used.
+- Public write endpoint: POST /api/home-collection is permitAll() and saves to DB — allows anonymous inserts (spam/abuse).
+- MySQL host port exposed (3306:3306) in Compose — increases attack surface; should not be host-published unless necessary.
+- HTTP Basic enabled in SecurityConfig — can be unsafe without TLS and stronger auth mechanisms.
+
+Important Issues (Medium)
+- Actuator endpoints (/actuator/health and /actuator/info) are permitAll — may leak operational info.
+- Default DB password fallback present in application-prod.properties (change_me_password) — avoid defaults in repo.
+- H2 console enabled in dev profile — ensure not reachable in production.
+- OpenAPI defines bearer JWT but runtime enables HTTP Basic — inconsistent security posture.
+
+Low/Minor Issues
+- CORS allowCredentials=false mitigates some cookie risk but wildcard origins remain risky.
+- Input validation present for home-collection requests (good).
+- No obvious secrets in frontend source reviewed.
+- No explicit CSP or extra security headers beyond defaults; consider tightening.
+
+Concrete Recommendations
+1) Restrict CORS: replace wildcard with explicit origins per environment; remove controller-level wildcard.
+2) Reconsider CSRF: re-enable for browser forms or adopt stateless bearer auth for APIs and keep CSRF disabled only for non-browser clients.
+3) Protect write endpoints: require auth or add CAPTCHA/rate limiting and server-side spam detection for POST /api/home-collection.
+4) Remove host binding for MySQL in Compose unless required; use Docker network-only access and Docker secrets for credentials.
+5) Migrate from HTTP Basic in production to TLS + JWT bearer tokens (or mTLS) and align OpenAPI security scheme to runtime.
+6) Restrict actuator exposure to authenticated/internal access only.
+7) Remove default credentials from repo; load secrets from environment or secret manager; add .env.example without real secrets.
+8) Disable H2 console outside local/dev environments.
+9) Run dependency vulnerability scans (OWASP Dependency-Check / Snyk) and fix reported CVEs.
+10) Add or tighten security headers (CSP, X-Frame-Options, Referrer-Policy) and secure cookies where used.
+
+Suggested quick commands
+- List running containers and published ports:
+  docker ps --format '{{.Names}}: {{.Ports}}'
+- Find potential secrets in repo:
+  grep -R --line-number -E "password|secret|apikey|api_key|ACCESS_TOKEN" .
+- Show dependency tree (Maven):
+  ./mvnw -q dependency:tree
+
+Audit prepared by: automated review (assistant)
