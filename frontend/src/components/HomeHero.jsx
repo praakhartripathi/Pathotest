@@ -12,6 +12,7 @@ import TestByHealthRisks from './TestByHealthRisks'
 import MostPrescribedTests from './MostPrescribedTests'
 import TestByHealthConditions from './TestByHealthConditions'
 import PromoBanners from './PromoBanners'
+import WhyPathkindLabs from './WhyPathkindLabs'
 
 const FEATURES = [
   { icon: BadgeCheck, label: 'Most Trusted by Doctors' },
@@ -208,6 +209,7 @@ export default function HomeHero() {
       <MostPrescribedTests />
       <TestByHealthConditions />
       <PromoBanners />
+      <WhyPathkindLabs />
     </section>
   )
 }
