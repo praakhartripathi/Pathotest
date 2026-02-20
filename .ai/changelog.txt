@@ -146,3 +146,25 @@ It documents every change made to the Pathotest codebase session by session.
 - Modified `frontend/src/App.jsx` — renders <Footer /> at bottom of every page
 - Branch: feat/site-footer
 
+
+---
+
+### [Issue #40] feat: Add Sign In/Sign Up modal triggered from Navbar Sign In button
+- Created `frontend/src/components/SignInModal.jsx`
+  - 2-step OTP flow: mobile number entry -> OTP verification
+  - Step 1: pill-shaped mobile input, consent checkbox (Pathotest branding),
+    "Generate OTP" full-width navy button
+  - Step 2: OTP input, "Verify & Continue" button, "Change number" back link
+  - Simulated OTP send (800ms timeout) — replace with real API call
+  - Footer: "By proceeding, you agree to Pathotest T&C and Privacy Policy"
+  - Close: X button top-right, backdrop click, or Escape key
+  - Body scroll locked while modal open
+  - State resets on each open
+- Modified `frontend/src/components/Navbar.jsx`
+  - Added `onSignInClick` prop
+  - Added navy pill "Sign In" button (id=navbar-sign-in) on the right end of navbar
+- Modified `frontend/src/App.jsx`
+  - Added `showSignIn` state
+  - Passed `onSignInClick={() => setShowSignIn(true)}` to Navbar
+  - Rendered `<SignInModal open={showSignIn} onClose=... />` alongside OfferPopup
+- Branch: feat/sign-in-modal

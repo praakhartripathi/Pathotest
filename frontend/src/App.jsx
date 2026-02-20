@@ -7,12 +7,14 @@ import ContactPage from './pages/ContactPage'
 import HomeHero from './components/HomeHero'
 import OfferPopup from './components/OfferPopup'
 import Footer from './components/Footer'
+import SignInModal from './components/SignInModal'
 
 const OFFER_POPUP_INTERVAL_MS = 120000
 
 function App() {
   const [page, setPage] = useState('home')
   const [showOfferPopup, setShowOfferPopup] = useState(false)
+  const [showSignIn, setShowSignIn] = useState(false)
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -36,7 +38,7 @@ function App() {
         onInvestorClick={() => setPage('investor')}
         onContactClick={() => setPage('contact')}
       />
-      <Navbar />
+      <Navbar onSignInClick={() => setShowSignIn(true)} />
 
       {page === 'investor' && <InvestorPage />}
       {page === 'contact' && <ContactPage />}
@@ -48,6 +50,7 @@ function App() {
       )}
 
       <OfferPopup open={showOfferPopup} onClose={() => setShowOfferPopup(false)} />
+      <SignInModal open={showSignIn} onClose={() => setShowSignIn(false)} />
       <Footer />
     </div>
   )
