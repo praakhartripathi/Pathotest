@@ -125,3 +125,24 @@ It documents every change made to the Pathotest codebase session by session.
   - Fixed example API city Gurgaon → Lucknow
 - Created `.ai/changelog.txt` (this file) — running AI change log
 - Branch: feat/about-popular-tests-sections
+
+---
+
+### [Issue #38] feat: Add site-wide Footer component with Pathotest branding
+- Created `frontend/src/components/Footer.jsx`
+  - Top grey section: 5 nav columns
+    * Patients: Book a Test, Upload Prescription, Download Report, Health Packages, Lab Locator, Claim Refund
+    * Partner with us: Franchise Opportunities, Corporate Wellness, Hospital Lab Management, Organise Camps
+    * Doctors: National Reference Lab, Research and Development, Download Forms, Scientific Literature
+    * Company: About Us, Mission & Vision, Board of Directors, Management, Career, Newsletter, PR Media
+    * Contact Us: Get in touch, Faq, Sitemap + Download App (App Store + Google Play badges)
+  - Bottom amber section (#f5b800):
+    * "Get in Touch" heading
+    * Legal links: Terms of Use | Disclaimer | Privacy Policy | Blogs | Video | EDOS
+    * Contact: Call Us 75000 75111 | Mail Us care@pathotest.com | Radiology notice (UP cities)
+    * Copyright: © 2026 Pathotest Diagnostics Pvt. Ltd. All Rights Reserved | Unsubscribe
+    * Follow us: 5 social icon circles (Facebook, X, LinkedIn, Instagram, YouTube)
+  - Fully responsive: stacked mobile / 5-col grid desktop
+- Modified `frontend/src/App.jsx` — renders <Footer /> at bottom of every page
+- Branch: feat/site-footer
+
