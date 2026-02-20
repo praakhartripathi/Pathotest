@@ -17,7 +17,7 @@ const UP_CITIES = [
   'Ayodhya',
 ]
 
-export default function TopBar({ onHomeClick }) {
+export default function TopBar({ onHomeClick, onInvestorClick, onContactClick, onSignInClick }) {
   const [selectedCity, setSelectedCity] = useState('Lucknow')
 
   return (
@@ -66,7 +66,11 @@ export default function TopBar({ onHomeClick }) {
             </div>
           </a>
 
-          <button className="flex items-center gap-1 text-sm sm:text-base font-semibold text-[#20232d] border-0 bg-transparent p-0">
+          <button
+            id="topbar-sign-in"
+            onClick={onSignInClick}
+            className="flex items-center gap-1 text-sm sm:text-base font-semibold text-[#20232d] border-0 bg-transparent p-0 hover:text-[#194b76] transition-colors"
+          >
             <UserRound size={18} />
             <LogIn size={16} className="-ml-2" />
             <span className="hidden sm:inline">Sign In</span>

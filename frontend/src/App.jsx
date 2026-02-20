@@ -37,8 +37,9 @@ function App() {
         onHomeClick={() => setPage('home')}
         onInvestorClick={() => setPage('investor')}
         onContactClick={() => setPage('contact')}
+        onSignInClick={() => setShowSignIn(true)}
       />
-      <Navbar onSignInClick={() => setShowSignIn(true)} />
+      <Navbar />
 
       {page === 'investor' && <InvestorPage />}
       {page === 'contact' && <ContactPage />}
