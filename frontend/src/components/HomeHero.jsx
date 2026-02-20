@@ -48,6 +48,11 @@ export default function HomeHero() {
 
   const handleChange = (field) => (event) => {
     const value = field === 'consent' ? event.target.checked : event.target.value
+    if (field === 'mobile') {
+      const digitsOnly = value.replace(/\D/g, '').slice(0, 10)
+      setForm((prev) => ({ ...prev, [field]: digitsOnly }))
+      return
+    }
     setForm((prev) => ({ ...prev, [field]: value }))
   }
 
@@ -133,6 +138,9 @@ export default function HomeHero() {
               placeholder="Mobile number *"
               value={form.mobile}
               onChange={handleChange('mobile')}
+              inputMode="numeric"
+              maxLength={10}
+              pattern="[0-9]{10}"
               className="w-full h-14 px-4 rounded-lg border border-gray-300 bg-white text-[24px] text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
             />
             <select
