@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { X } from 'lucide-react'
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || ''
+
 export default function SignInModal({ open, onClose }) {
     const [mobile, setMobile] = useState('')
     const [consent, setConsent] = useState(true)
     const [step, setStep] = useState('mobile') // 'mobile' | 'otp'
     const [otp, setOtp] = useState('')
-    const [sending, setSending] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
 
     // Reset on open
     useEffect(() => {
@@ -14,7 +17,8 @@ export default function SignInModal({ open, onClose }) {
             setMobile('')
             setOtp('')
             setStep('mobile')
-            setSending(false)
+            setLoading(false)
+            setError('')
         }
     }, [open])
 
@@ -26,7 +30,7 @@ export default function SignInModal({ open, onClose }) {
         return () => window.removeEventListener('keydown', handler)
     }, [open, onClose])
 
-    // Prevent body scroll while open
+    // Lock body scroll
     useEffect(() => {
         if (!open) return undefined
         const prev = document.body.style.overflow
@@ -37,25 +41,59 @@ export default function SignInModal({ open, onClose }) {
     if (!open) return null
 
     const handleMobileChange = (e) => {
-        const digits = e.target.value.replace(/\D/g, '').slice(0, 10)
-        setMobile(digits)
+        setError('')
+        setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))
     }
 
-    const handleGenerateOTP = (e) => {
+    // ── Step 1: Generate OTP ──────────────────────────────────────────
+    const handleGenerateOTP = async (e) => {
         e.preventDefault()
         if (mobile.length !== 10) return
-        setSending(true)
-        // Simulate OTP send (real integration can replace this)
-        setTimeout(() => {
-            setSending(false)
+        setLoading(true)
+        setError('')
+        try {
+            const res = await fetch(`${API_BASE}/api/auth/generate-otp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mobile }),
+            })
+            const data = await res.json()
+            if (!res.ok || !data.success) {
+                throw new Error(data.message || 'Failed to send OTP. Please try again.')
+            }
             setStep('otp')
-        }, 800)
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
     }
 
-    const handleVerifyOTP = (e) => {
+    // ── Step 2: Verify OTP ────────────────────────────────────────────
+    const handleVerifyOTP = async (e) => {
         e.preventDefault()
-        // Placeholder — real verification goes here
-        onClose()
+        if (otp.length !== 6) return
+        setLoading(true)
+        setError('')
+        try {
+            const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mobile, otp }),
+            })
+            const data = await res.json()
+            if (!res.ok || !data.success) {
+                throw new Error(data.message || 'Verification failed. Please try again.')
+            }
+            // Persist token
+            localStorage.setItem('pathotest_token', data.data.token)
+            localStorage.setItem('pathotest_mobile', data.data.mobile)
+            onClose()
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -92,6 +130,13 @@ export default function SignInModal({ open, onClose }) {
                     Please provide your number to receive updates.
                 </p>
 
+                {/* Error banner */}
+                {error && (
+                    <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-2.5 text-sm text-red-600 text-center">
+                        {error}
+                    </div>
+                )}
+
                 {step === 'mobile' ? (
                     <form onSubmit={handleGenerateOTP} className="space-y-5">
                         {/* Mobile input */}
@@ -103,7 +148,7 @@ export default function SignInModal({ open, onClose }) {
                             placeholder="Enter Your Mobile"
                             value={mobile}
                             onChange={handleMobileChange}
-                            className="w-full h-13 px-5 py-3.5 rounded-full border border-gray-200 bg-gray-50 text-base text-gray-700 outline-none focus:ring-2 focus:ring-[#194b76] placeholder:text-gray-400"
+                            className="w-full px-5 py-3.5 rounded-full border border-gray-200 bg-gray-50 text-base text-gray-700 outline-none focus:ring-2 focus:ring-[#194b76] placeholder:text-gray-400"
                             required
                         />
 
@@ -124,10 +169,10 @@ export default function SignInModal({ open, onClose }) {
                         {/* Generate OTP button */}
                         <button
                             type="submit"
-                            disabled={mobile.length !== 10 || sending}
+                            disabled={mobile.length !== 10 || !consent || loading}
                             className="w-full h-14 rounded-full bg-[#194b76] text-white font-bold text-xl border-0 hover:bg-[#0e3a5e] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            {sending ? 'Sending OTP…' : 'Generate OTP'}
+                            {loading ? 'Sending…' : 'Generate OTP'}
                         </button>
                     </form>
                 ) : (
@@ -143,20 +188,23 @@ export default function SignInModal({ open, onClose }) {
                             maxLength={6}
                             placeholder="Enter OTP"
                             value={otp}
-                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                            className="w-full h-13 px-5 py-3.5 rounded-full border border-gray-200 bg-gray-50 text-base text-gray-700 outline-none focus:ring-2 focus:ring-[#194b76] placeholder:text-gray-400 tracking-widest text-center"
+                            onChange={(e) => {
+                                setError('')
+                                setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))
+                            }}
+                            className="w-full px-5 py-3.5 rounded-full border border-gray-200 bg-gray-50 text-base text-gray-700 outline-none focus:ring-2 focus:ring-[#194b76] placeholder:text-gray-400 tracking-widest text-center"
                             required
                         />
                         <button
                             type="submit"
-                            disabled={otp.length !== 6}
+                            disabled={otp.length !== 6 || loading}
                             className="w-full h-14 rounded-full bg-[#194b76] text-white font-bold text-xl border-0 hover:bg-[#0e3a5e] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
-                            Verify &amp; Continue
+                            {loading ? 'Verifying…' : 'Verify & Continue'}
                         </button>
                         <button
                             type="button"
-                            onClick={() => setStep('mobile')}
+                            onClick={() => { setStep('mobile'); setOtp(''); setError('') }}
                             className="w-full text-sm text-[#194b76] hover:underline bg-transparent border-0"
                         >
                             ← Change number
