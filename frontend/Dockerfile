@@ -1,15 +1,19 @@
-# ── Stage 1: Build ───────────────────────────────────────────────
+# syntax=docker/dockerfile:1
+# ── Stage 1: Build ───────────────────────────────────────────────────
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# --mount=type=cache persists npm cache between builds so only changed
+# packages are re-downloaded when package.json changes.
 COPY package*.json ./
-RUN npm ci
+RUN --mount=type=cache,target=/root/.npm \
+    npm ci
 
 COPY . .
 RUN npm run build
 
-# ── Stage 2: Serve with nginx ─────────────────────────────────────
+# ── Stage 2: Serve with nginx ─────────────────────────────────────────
 FROM nginx:alpine AS runner
 
 # Remove default nginx page

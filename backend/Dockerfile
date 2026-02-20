@@ -1,16 +1,22 @@
-# ── Stage 1: Build ───────────────────────────────────────────────
+# syntax=docker/dockerfile:1
+# ── Stage 1: Build ───────────────────────────────────────────────────
 FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-# Cache dependencies first (only re-runs if pom.xml changes)
+# Copy only pom.xml first so the dependency download layer is cached
+# until pom.xml actually changes.
+# --mount=type=cache persists ~/.m2 between builds on the same host
+# even after pom.xml changes — only NEW jars are downloaded.
 COPY pom.xml ./
-RUN mvn dependency:go-offline -q
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn dependency:go-offline -q
 
 COPY src ./src
-RUN mvn clean package -DskipTests -q
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn clean package -DskipTests -q
 
-# ── Stage 2: Run ─────────────────────────────────────────────────
+# ── Stage 2: Run ─────────────────────────────────────────────────────
 FROM eclipse-temurin:17-jre AS runner
 
 WORKDIR /app
