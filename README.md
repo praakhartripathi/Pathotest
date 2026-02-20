@@ -39,6 +39,15 @@ mvn spring-boot:run
 # → http://localhost:8080
 ```
 
+### Run With Docker (Hot Reload)
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
+- Frontend (Vite HMR): `http://localhost:5173`
+- Backend API: `http://localhost:8080`
+- Backend health: `http://localhost:8080/actuator/health`
+
 ## 🛠️ Tech Stack
 
 | Layer | Technology |

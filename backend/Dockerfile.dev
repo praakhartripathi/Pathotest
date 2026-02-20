@@ -1,0 +1,13 @@
+FROM maven:3.9-eclipse-temurin-17
+
+WORKDIR /app
+
+# Keep dependency downloads cacheable between rebuilds
+COPY pom.xml ./
+RUN mvn -q -DskipTests dependency:go-offline
+
+COPY src ./src
+
+EXPOSE 8080
+
+CMD ["mvn", "spring-boot:run", "-Dspring-boot.run.profiles=prod", "-Dspring-boot.run.addResources=true"]

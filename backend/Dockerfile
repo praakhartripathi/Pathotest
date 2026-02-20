@@ -1,5 +1,5 @@
 # ── Stage 1: Build ───────────────────────────────────────────────
-FROM maven:3.9-eclipse-temurin-17-alpine AS builder
+FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
@@ -11,11 +11,11 @@ COPY src ./src
 RUN mvn clean package -DskipTests -q
 
 # ── Stage 2: Run ─────────────────────────────────────────────────
-FROM eclipse-temurin:17-jre-alpine AS runner
+FROM eclipse-temurin:17-jre AS runner
 
 WORKDIR /app
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
 
 COPY --from=builder /app/target/*.jar app.jar
 

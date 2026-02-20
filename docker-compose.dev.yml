@@ -1,7 +1,7 @@
 services:
   mysql:
     image: mysql:8.0
-    container_name: pathotest-mysql
+    container_name: pathotest-mysql-dev
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change_me_root}
@@ -25,16 +25,22 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
-    container_name: pathotest-backend
+      dockerfile: Dockerfile.dev
+    container_name: pathotest-backend-dev
     restart: unless-stopped
-    ports:
-      - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
       DB_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-pathotest}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8mb4
       DB_USERNAME: ${MYSQL_USER:-pathotest_user}
       DB_PASSWORD: ${MYSQL_PASSWORD:-change_me_password}
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+      SPRING_DEVTOOLS_RESTART_POLL_INTERVAL: 2s
+      SPRING_DEVTOOLS_RESTART_QUIET_PERIOD: 1s
+    volumes:
+      - ./backend:/app
+      - maven_cache:/root/.m2
+    ports:
+      - "8080:8080"
     depends_on:
       mysql:
         condition: service_healthy
@@ -50,20 +56,27 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-    container_name: pathotest-frontend
+      dockerfile: Dockerfile.dev
+    container_name: pathotest-frontend-dev
     restart: unless-stopped
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
     ports:
-      - "80:80"
+      - "5173:5173"
     depends_on:
       backend:
-        condition: service_healthy
+        condition: service_started
     networks:
       - pathotest-network
 
 volumes:
   mysql_data:
-    driver: local
+  maven_cache:
+  frontend_node_modules:
 
 networks:
   pathotest-network:
