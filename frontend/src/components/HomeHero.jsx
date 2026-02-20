@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import WellnessPackagesSection from './WellnessPackagesSection'
 import TestByHealthRisks from './TestByHealthRisks'
+import MostPrescribedTests from './MostPrescribedTests'
 
 const FEATURES = [
   { icon: BadgeCheck, label: 'Most Trusted by Doctors' },
@@ -202,6 +203,7 @@ export default function HomeHero() {
 
       <WellnessPackagesSection />
       <TestByHealthRisks />
+      <MostPrescribedTests />
     </section>
   )
 }
