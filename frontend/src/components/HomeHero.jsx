@@ -12,7 +12,7 @@ import TestByHealthRisks from './TestByHealthRisks'
 import MostPrescribedTests from './MostPrescribedTests'
 import TestByHealthConditions from './TestByHealthConditions'
 import PromoBanners from './PromoBanners'
-import WhyPathkindLabs from './WhyPathkindLabs'
+import WhyPathotestLabs from './WhyPathotestLabs'
 
 const FEATURES = [
   { icon: BadgeCheck, label: 'Most Trusted by Doctors' },
@@ -107,7 +107,7 @@ export default function HomeHero() {
             </h1>
 
             <div className="mt-4 inline-flex rounded-xl bg-[#ffd027] px-4 py-2 text-[#1f2c3a] font-semibold text-base sm:text-xl lg:text-2xl">
-              FREE with all Healthkind Packages.
+              FREE with all Pathotest Packages.
             </div>
 
             <p className="mt-4 text-xl sm:text-2xl lg:text-[27px] leading-snug text-blue-50 max-w-[420px]">
@@ -172,7 +172,7 @@ export default function HomeHero() {
                   onChange={handleChange('consent')}
                 />
                 <span>
-                  I authorize Pathkind Labs and its affiliates/representatives to contact me via phone calls, email, RCS, SMS or WhatsApp.
+                  I authorize Pathotest and its affiliates/representatives to contact me via phone calls, email, RCS, SMS or WhatsApp.
                 </span>
               </label>
 
@@ -209,7 +209,7 @@ export default function HomeHero() {
       <MostPrescribedTests />
       <TestByHealthConditions />
       <PromoBanners />
-      <WhyPathkindLabs />
+      <WhyPathotestLabs />
     </section>
   )
 }

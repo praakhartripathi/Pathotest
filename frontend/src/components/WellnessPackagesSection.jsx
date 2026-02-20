@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react'
 
 const PACKAGES = [
   {
-    name: 'HEALTHKIND TOTAL PLUS',
+    name: 'PATHOTEST TOTAL PLUS',
     profiles: 12,
     tests: 15,
     params: 87,
@@ -11,7 +11,7 @@ const PACKAGES = [
     discount: 74,
   },
   {
-    name: 'HEALTHKIND ADVANCE',
+    name: 'PATHOTEST ADVANCE',
     profiles: 15,
     tests: 19,
     params: 97,
@@ -20,7 +20,7 @@ const PACKAGES = [
     discount: 58,
   },
   {
-    name: 'HEALTHKIND PLATINUM',
+    name: 'PATHOTEST PLATINUM',
     profiles: 16,
     tests: 21,
     params: 99,
@@ -29,7 +29,7 @@ const PACKAGES = [
     discount: 57,
   },
   {
-    name: 'HEALTHKIND COMPLETE',
+    name: 'PATHOTEST COMPLETE',
     profiles: 13,
     tests: 17,
     params: 92,

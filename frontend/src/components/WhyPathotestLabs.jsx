@@ -108,12 +108,12 @@ const FEATURES = [
     },
 ]
 
-export default function WhyPathkindLabs() {
+export default function WhyPathotestLabs() {
     return (
         <section className="w-full pt-10 sm:pt-14 pb-6">
             {/* Header */}
             <h2 className="text-2xl sm:text-4xl font-extrabold text-[#2b2d37] mb-8 sm:mb-10">
-                Why Pathkind Labs
+                Why Pathotest
             </h2>
 
             {/* 4 × 2 grid */}

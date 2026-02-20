@@ -14,11 +14,11 @@ export default function PromoBanners() {
                     {/* Text content */}
                     <div className="relative z-20 p-6 sm:p-8 flex flex-col justify-center max-w-[60%]">
                         <h3 className="text-xl sm:text-2xl font-extrabold text-[#ffd027] leading-tight mb-3">
-                            Unveiling the Hidden Causes of Acne with Pathkind Labs
+                            Unveiling the Hidden Causes of Acne with Pathotest
                         </h3>
                         <p className="text-xs sm:text-sm text-gray-200 leading-relaxed mb-5">
                             Are you tired of battling persistent acne? Do you yearn to discover the true root cause
-                            behind your skin troubles? Look no further than Pathkind Labs.
+                            behind your skin troubles? Look no further than Pathotest.
                         </p>
                         <button className="self-start h-9 px-6 rounded-full bg-[#ffd027] text-[#3d0e0e] font-bold text-xs sm:text-sm border-0 hover:bg-[#f0c000] transition-colors">
                             Know More
@@ -47,7 +47,7 @@ export default function PromoBanners() {
                         </p>
                         <div className="self-end">
                             <span className="text-[#194b76] font-black text-lg sm:text-xl tracking-tight">
-                                Pathkind{' '}
+                                Pathotest{' '}
                                 <span className="text-[#e8373f]">Hairfall</span>
                                 <span className="text-[#194b76]">Check</span>
                             </span>

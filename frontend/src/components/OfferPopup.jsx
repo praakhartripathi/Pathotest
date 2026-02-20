@@ -42,7 +42,7 @@ export default function OfferPopup({ open, onClose }) {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label="Healthkind Full Body Checkup Offer"
+        aria-label="Pathotest Full Body Checkup Offer"
         className="relative bg-[#efefef] rounded-2xl shadow-2xl w-full max-w-[780px] max-h-[calc(100vh-2rem)] overflow-y-auto"
         onClick={stopPropagation}
       >
@@ -56,8 +56,8 @@ export default function OfferPopup({ open, onClose }) {
         </button>
 
         <img
-          src="/offers/healthkind-offer.png"
-          alt="Healthkind Full Body Checkup promotional offer"
+          src="/offers/pathotest-offer.png"
+          alt="Pathotest Full Body Checkup promotional offer"
           className="w-full h-auto rounded-t-2xl"
         />
 

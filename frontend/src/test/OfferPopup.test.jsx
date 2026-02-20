@@ -4,14 +4,14 @@ import OfferPopup from '../components/OfferPopup'
 
 describe('OfferPopup', () => {
   it('does not render when closed', () => {
-    const { queryByRole } = render(<OfferPopup open={false} onClose={() => {}} />)
+    const { queryByRole } = render(<OfferPopup open={false} onClose={() => { }} />)
     expect(queryByRole('dialog')).not.toBeInTheDocument()
   })
 
   it('renders dialog and call link when open', () => {
-    render(<OfferPopup open={true} onClose={() => {}} />)
+    render(<OfferPopup open={true} onClose={() => { }} />)
 
-    expect(screen.getByRole('dialog', { name: /healthkind full body checkup offer/i })).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: /pathotest full body checkup offer/i })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /call: 75000-75111/i })).toHaveAttribute('href', 'tel:+917500075111')
   })
 
