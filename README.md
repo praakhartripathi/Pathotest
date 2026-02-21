@@ -35,6 +35,7 @@ pathotest/
 │       └── test/
 ├── backend/                       # Spring Boot REST API
 │   └── src/main/java/com/pathotest/
+│       ├── auth/                  # OTP Authentication APIs
 │       ├── homecollection/        # Lead capture (Schedule Home Collection)
 │       ├── wellnesspackage/       # Public package catalog APIs
 │       ├── labtest/               # Public tests APIs
@@ -119,6 +120,7 @@ The home page is composed of the following sections (in order):
 ### Frontend Features
 
 - Pathotest-branded landing page
+- OTP-based Authentication (Sign In / Sign Up flow)
 - Floating WhatsApp CTA button
 - Timed offer popup:
   - appears after 120 seconds
@@ -127,6 +129,11 @@ The home page is composed of the following sections (in order):
 - All cities within Uttar Pradesh supported in home collection form
 
 ## Backend Features
+
+### OTP Authentication APIs
+
+- `POST /api/auth/generate-otp`: Generates a 6-digit OTP for the given mobile number.
+- `POST /api/auth/verify-otp`: Verifies the OTP and returns a JWT token for secure access.
 
 ### Home Collection Lead API
 
@@ -173,7 +180,7 @@ Public endpoints:
 - `GET /api/blogs/**`
 - `GET /api/locations`
 
-Other endpoints are secured by Spring Security.
+Other endpoints are secured by Spring Security via JWT token obtained from `/api/auth/verify-otp`.
 
 ### Migrations
 
@@ -187,6 +194,27 @@ Includes:
 - `V3__content_and_locations.sql`
 
 ## Quick API Examples
+
+Generate OTP:
+
+```bash
+curl -X POST "http://localhost:8080/api/auth/generate-otp" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "mobile": "9876543210"
+  }'
+```
+
+Verify OTP:
+
+```bash
+curl -X POST "http://localhost:8080/api/auth/verify-otp" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "mobile": "9876543210",
+    "otp": "123456"
+  }'
+```
 
 Create home collection lead:
 
