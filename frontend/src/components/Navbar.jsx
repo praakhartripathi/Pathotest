@@ -41,7 +41,7 @@ const PARTNER_DROPDOWN_ITEMS = [
   'Organise Camps',
 ]
 
-export default function Navbar() {
+export default function Navbar({ onNearestLabClick }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [isTestsDropdownOpen, setIsTestsDropdownOpen] = useState(false)
   const [isPackagesDropdownOpen, setIsPackagesDropdownOpen] = useState(false)
@@ -145,6 +145,7 @@ export default function Navbar() {
               <button
                 key={item.label}
                 type="button"
+                onClick={item.label === 'Nearest Lab' ? onNearestLabClick : undefined}
                 className="whitespace-nowrap border-0 bg-transparent p-0 text-xs sm:text-sm md:text-base font-semibold text-[#2b2d37] hover:text-[#1b4e7b] flex items-center gap-1"
               >
                 {item.label}

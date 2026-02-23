@@ -4,6 +4,7 @@ import TopBar from './components/TopBar'
 import Navbar from './components/Navbar'
 import InvestorPage from './pages/InvestorPage'
 import ContactPage from './pages/ContactPage'
+import NearestLabPage from './pages/NearestLabPage'
 import HomeHero from './components/HomeHero'
 import OfferPopup from './components/OfferPopup'
 import Footer from './components/Footer'
@@ -39,10 +40,11 @@ function App() {
         onContactClick={() => setPage('contact')}
         onSignInClick={() => setShowSignIn(true)}
       />
-      <Navbar />
+      <Navbar onNearestLabClick={() => setPage('nearest-lab')} />
 
       {page === 'investor' && <InvestorPage />}
       {page === 'contact' && <ContactPage />}
+      {page === 'nearest-lab' && <NearestLabPage />}
 
       {page === 'home' && (
         <main className="pb-10">
