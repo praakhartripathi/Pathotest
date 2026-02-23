@@ -57,15 +57,19 @@ pathotest/
 
 ## Run the App
 
-### Option 1: Docker (recommended)
+### Option 1: Docker (recommended, hot reload enabled)
 
 ```bash
 docker compose up --build
 ```
 
-- Frontend: `http://localhost`
-- Backend: `http://localhost:8080`
-- Health: `http://localhost:8080/actuator/health`
+- Frontend: `http://localhost:25001`
+- Backend: `http://localhost:25999`
+- Health: `http://localhost:25999/actuator/health`
+
+This command now automatically applies `docker-compose.override.yml` and enables:
+- Vite HMR for frontend (no container restart needed)
+- Spring DevTools restart for backend (code/resource changes picked from mounted source)
 
 ### Option 2: Docker Dev (hot reload)
 
@@ -73,8 +77,8 @@ docker compose up --build
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-- Frontend (Vite HMR): `http://localhost:5173`
-- Backend API: `http://localhost:8080`
+- Frontend (Vite HMR): `http://localhost:25001`
+- Backend API: `http://localhost:25999`
 
 ### Option 3: Run services separately
 

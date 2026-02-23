@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, LogIn, Phone, Search, ShoppingCart, UserRound } from 'lucide-react'
 
 const UP_CITIES = [
@@ -19,6 +19,34 @@ const UP_CITIES = [
 
 export default function TopBar({ onHomeClick, onInvestorClick, onContactClick, onSignInClick }) {
   const [selectedCity, setSelectedCity] = useState('Lucknow')
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const cartRef = useRef(null)
+
+  useEffect(() => {
+    if (!isCartOpen) {
+      return
+    }
+
+    const onPointerDown = (event) => {
+      if (!cartRef.current?.contains(event.target)) {
+        setIsCartOpen(false)
+      }
+    }
+
+    const onEsc = (event) => {
+      if (event.key === 'Escape') {
+        setIsCartOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', onPointerDown)
+    document.addEventListener('keydown', onEsc)
+
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown)
+      document.removeEventListener('keydown', onEsc)
+    }
+  }, [isCartOpen])
 
   return (
     <header className="w-full bg-[#efefef] border-b border-gray-200">
@@ -57,7 +85,7 @@ export default function TopBar({ onHomeClick, onInvestorClick, onContactClick, o
           </div>
         </div>
 
-        <div className="ml-auto flex items-center gap-3 sm:gap-4 text-[#20232d] shrink-0">
+        <div className="relative ml-auto flex items-center gap-3 sm:gap-4 text-[#20232d] shrink-0">
           <a href="tel:+917500075111" className="hidden xl:flex items-center gap-2 hover:text-[#194b76]">
             <Phone size={18} />
             <div className="leading-tight">
@@ -76,11 +104,40 @@ export default function TopBar({ onHomeClick, onInvestorClick, onContactClick, o
             <span className="hidden sm:inline">Sign In</span>
           </button>
 
-          <button className="relative flex items-center gap-1 text-sm sm:text-base font-semibold text-[#20232d] border-0 bg-transparent p-0">
+          <button
+            type="button"
+            onClick={() => setIsCartOpen((prev) => !prev)}
+            aria-haspopup="menu"
+            aria-expanded={isCartOpen}
+            className="relative flex items-center gap-1 text-sm sm:text-base font-semibold text-[#20232d] border-0 bg-transparent p-0"
+          >
             <ShoppingCart size={20} />
             <span className="absolute -top-2 left-3 text-[10px] font-bold">0</span>
             <span className="hidden sm:inline">Cart</span>
           </button>
+
+          {isCartOpen && (
+            <div
+              ref={cartRef}
+              role="menu"
+              aria-label="Cart summary"
+              className="absolute right-0 top-[calc(100%+10px)] z-50 w-[320px] rounded-xl border border-[#d8d2bb] bg-[#f7f3e3] shadow-[0_10px_30px_rgba(13,35,67,0.2)] overflow-hidden"
+            >
+              <div className="flex items-center gap-2 px-5 py-4 text-[#1f1f1f]">
+                <ShoppingCart size={17} className="text-[#1f1f1f]" />
+                <span className="text-2xl font-semibold leading-none">Cart Items</span>
+                <span className="text-2xl font-semibold leading-none text-[#0a4b79]">(0)</span>
+              </div>
+              <div className="px-4 pb-4">
+                <button
+                  type="button"
+                  className="w-full rounded-full bg-[#1b4e7b] py-3 text-xl font-bold leading-none text-white hover:bg-[#163f63]"
+                >
+                  Checkout
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </header>

@@ -1,0 +1,34 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    environment:
+      SPRING_PROFILES_ACTIVE: docker-dev
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+      SPRING_DEVTOOLS_RESTART_POLL_INTERVAL: "1000"
+      SPRING_DEVTOOLS_RESTART_QUIET_PERIOD: "400"
+      SPRING_DEVTOOLS_LIVERELOAD_ENABLED: "true"
+      DB_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE:-pathotest}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USERNAME: ${MYSQL_USER:-pathotest_user}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-change_me_password}
+    volumes:
+      - ./backend:/app
+      - maven_cache:/root/.m2
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    environment:
+      VITE_POLLING: "true"
+      VITE_HMR_HOST: "localhost"
+      VITE_API_TARGET: "http://backend:8080"
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "80"]
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+
+volumes:
+  maven_cache:
+  frontend_node_modules:
